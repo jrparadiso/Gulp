@@ -14,9 +14,7 @@
     "gulp-imagemin": "^4.1.0",
     "gulp-sass": "^4.0.1",
     "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8"
-  },
-  "dependencies": {
+    "gulp-util": "^3.0.8",
     "gulp-htmlmin": "^4.0.0",
     "gulp-rimraf": "^0.2.2",
     "pump": "^3.0.0"
