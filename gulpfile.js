@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify');
+const pump = require('pump');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
 const htmlmin = require('gulp-htmlmin');
@@ -46,12 +47,11 @@ gulp.task('imageMin', () =>
 );
 
 // Minify js
-gulp.task('minify', () => 
-    gulp
-      .src('src/js/*.js')
-      .pipe(uglify())
-      .pipe(gulp.dest('dist/js'))
-);
+gulp.task('minify', function(cb) {
+        gulp.src('src/js/*.js')
+            .pipe(uglify())
+            .pipe(gulp.dest('dist/js'));
+});
 
 // Compile Sass
 gulp.task('sass',  () =>
@@ -62,13 +62,17 @@ gulp.task('sass',  () =>
 );
 
 // Scripts
-gulp.task('scripts', () => 
-    gulp
-      .src('src/js/*.js')
-      .pipe(concat('main.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist/js'))
-);
+gulp.task('scripts', function(cb) {
+    pump([
+        gulp.src('src/js/*.js'),
+            concat('main.js'),
+            uglify(),
+            gulp.dest('dist/js')
+        ],
+        cb
+    );      
+});
+
 
 // Minimize HTML
 gulp.task('htmlmin', () =>
